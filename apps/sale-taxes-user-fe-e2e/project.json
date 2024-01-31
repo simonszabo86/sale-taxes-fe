@@ -1,0 +1,29 @@
+{
+  "name": "sale-taxes-user-fe-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/sale-taxes-user-fe-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/sale-taxes-user-fe-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "sale-taxes-user-fe:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "sale-taxes-user-fe:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "sale-taxes-user-fe:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["sale-taxes-user-fe"]
+}

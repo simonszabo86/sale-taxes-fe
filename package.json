@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "nx",
-    "start": "nx serve sale-taxes-user-fe"
+    "start": "nx serve sale-taxes-user-fe",
+    "generate api": "npx openapi-generator-cli generate -i ./libs/api/src/api.yaml -g typescript-angular -o ./libs/api/src/lib --additional-properties fileNaming=kebab-case,withInterfaces=true,supportsES6=true,providedIn=none"
   },
   "private": true,
   "dependencies": {

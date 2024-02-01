@@ -62,6 +62,12 @@
     "sharedGlobals": []
   },
   "generators": {
+    "@schematics/angular:component": {
+      "prefix": "",
+      "style": "scss",
+      "changeDetection": "OnPush",
+      "inlineStyle": true
+    },
     "@nx/angular:application": {
       "e2eTestRunner": "cypress",
       "linter": "eslint",
@@ -70,10 +76,18 @@
     },
     "@nx/angular:library": {
       "linter": "eslint",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "jest",
+      "strict": true,
+      "buildable": true,
+      "changeDetection": "OnPush",
+      "style": "scss",
+      "skipTests": true,
+      "tags": ["TODO"],
+      "prefix": ["TODO"]
     },
     "@nx/angular:component": {
-      "style": "scss"
+      "style": "scss",
+      "changeDetection": "OnPush"
     }
   }
 }

@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@sale-taxes-fe/api": ["libs/api/src/index.ts"]
+      "@sale-taxes-fe/api": ["libs/api/src/index.ts"],
+      "@sale-taxes-fe/layout-ui": ["libs/layout/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

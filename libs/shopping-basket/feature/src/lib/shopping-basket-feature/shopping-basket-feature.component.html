@@ -1,0 +1,9 @@
+<button data-test="getShoppingBasket1"  mat-button color="primary" (click)="getShoppingBasket(1)">Get shopping Basket 1</button>
+<button mat-button color="primary" (click)="getShoppingBasket(2)">Get shopping Basket 2</button>
+<button mat-button color="primary" (click)="getShoppingBasket(3)">Get shopping Basket 3</button>
+<shopping-basket-ui
+  [products]="products()"
+  [totalShelfPrice]="totalShelfPrice()"
+  [totalSalesTaxes]="totalSalesTaxes()"
+>
+</shopping-basket-ui>

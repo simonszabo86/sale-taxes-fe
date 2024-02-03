@@ -16,7 +16,16 @@
     "baseUrl": ".",
     "paths": {
       "@sale-taxes-fe/api": ["libs/api/src/index.ts"],
-      "@sale-taxes-fe/layout-ui": ["libs/layout/ui/src/index.ts"]
+      "@sale-taxes-fe/layout-ui": ["libs/layout/ui/src/index.ts"],
+      "@sale-taxes-fe/shopping-basket-data-access": [
+        "libs/shopping-basket/data-access/src/index.ts"
+      ],
+      "@sale-taxes-fe/shopping-basket-feature": [
+        "libs/shopping-basket/feature/src/index.ts"
+      ],
+      "@sale-taxes-fe/shopping-basket-ui": [
+        "libs/shopping-basket/ui/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

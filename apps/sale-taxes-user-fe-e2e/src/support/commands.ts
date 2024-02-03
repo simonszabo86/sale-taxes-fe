@@ -15,6 +15,13 @@ declare namespace Cypress {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Chainable<Subject> {
     login(email: string, password: string): void;
+
+    getBySel(
+      selector: string,
+      options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
+    ): Chainable<JQuery<HTMLElement>>;
+
+    findBySel(selector: string): Chainable<JQuery<HTMLElement>>;
   }
 }
 
@@ -22,14 +29,11 @@ declare namespace Cypress {
 Cypress.Commands.add('login', (email, password) => {
   console.log('Custom command example: Login', email, password);
 });
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getBySel', (selector, options?) => {
+  return cy.get(`[data-test=${selector}]`, options);
+});
+
+Cypress.Commands.add('findBySel', { prevSubject: true }, (subject, selector, ...args) => {
+  return subject.find(`[data-test=${selector}]`, ...args);
+});

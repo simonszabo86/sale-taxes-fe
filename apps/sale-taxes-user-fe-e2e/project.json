@@ -20,6 +20,13 @@
         }
       }
     },
+    "e2e-open": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cypress open",
+        "cwd": "apps/sale-taxes-user-fe-e2e"
+      }
+    },
     "lint": {
       "executor": "@nx/eslint:lint"
     }

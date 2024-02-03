@@ -2,15 +2,20 @@ import { patchState, signalStore, withComputed, withMethods, withState } from '@
 import { GetShoppingBasketResponse, ProductDTO, ShoppingBasketControllerService } from '@sale-taxes-fe/api';
 import { computed, inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe, switchMap } from 'rxjs';
+import { delay, pipe, switchMap, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 
-export type CallState = 'init' | 'loading' | 'loaded' | { error: string };
+export enum CallState {
+  'init',
+  'loading',
+  'loaded',
+  'error'
+}
 
 export const ShoppingBasketStore = signalStore(
   withState({
     products: [] as ProductDTO[],
-    callState: 'init' as CallState
+    callState: CallState.init
   }),
 
   withMethods((state) => {
@@ -21,25 +26,31 @@ export const ShoppingBasketStore = signalStore(
       getShoppingBasket: rxMethod<number>(
         // effect
         pipe(
-          switchMap((id) => shoppingBasketControllerService.getShoppingBasket(id)),
-          tapResponse({
-            next: (response: GetShoppingBasketResponse) => {
-              // success reducer
-              console.log("response: ", response);
-              patchState(state, {
-                products: response.products,
-                callState: 'loaded'
-              });
-            },
-            error: (error: unknown) => {
-              // error reducer
-              const errorMessage = 'Could not get shoppingBasket';
-              patchState(state, {
-                callState: { error: errorMessage }
-              });
-              console.error(errorMessage + ': ' + error);
-            }
-          })
+          tap(() => {
+            patchState(state, {
+              callState: CallState.loading
+            });
+          }),
+          switchMap((id) => shoppingBasketControllerService.getShoppingBasket(id).pipe(
+            // Added to show the loading indicator
+            delay(1000),
+            tapResponse({
+              next: (response: GetShoppingBasketResponse) => {
+                // success reducer
+                patchState(state, {
+                  products: response.products,
+                  callState: CallState.loaded
+                });
+              },
+              error: (error: unknown) => {
+                // error reducer
+                console.error('Could not get shoppingBasket' + ': ' + error);
+                patchState(state, {
+                  callState: CallState.error
+                });
+              }
+            })
+          ))
         )
       )
 
@@ -47,11 +58,14 @@ export const ShoppingBasketStore = signalStore(
 
   }),
 
+  // custom entries and selectors
   withComputed(({ products }) => ({
     totalShelfPrice: computed(() =>
       +products().reduce((acc, a) => {
         return acc + (a.shelfPrice || 0);
       }, 0).toFixed(2)),
-    totalSalesTaxes: computed(() => +products().reduce((acc, a) => { return acc + ((a.shelfPrice || 0) - (a.price || 0)) }, 0).toFixed(2))
+    totalSalesTaxes: computed(() => +products().reduce((acc, a) => {
+      return acc + ((a.shelfPrice || 0) - (a.price || 0));
+    }, 0).toFixed(2))
   }))
 );

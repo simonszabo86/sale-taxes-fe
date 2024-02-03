@@ -1,9 +1,21 @@
-<button data-test="getShoppingBasket1"  mat-button color="primary" (click)="getShoppingBasket(1)">Get shopping Basket 1</button>
-<button mat-button color="primary" (click)="getShoppingBasket(2)">Get shopping Basket 2</button>
-<button mat-button color="primary" (click)="getShoppingBasket(3)">Get shopping Basket 3</button>
-<shopping-basket-ui
-  [products]="products()"
-  [totalShelfPrice]="totalShelfPrice()"
-  [totalSalesTaxes]="totalSalesTaxes()"
->
-</shopping-basket-ui>
+@for(item of ids; track item){
+  <button [attr.data-test]="'getShoppingBasket' + item" mat-button color="primary" (click)="getShoppingBasket(item)">Get shopping Basket {{item}}</button>
+}
+@switch (callState()) {
+  @case (CallState.loading) {
+    <mat-spinner></mat-spinner>
+  }
+  @case (CallState.loaded) {
+    <shopping-basket-ui
+      [products]="products()"
+      [totalShelfPrice]="totalShelfPrice()"
+      [totalSalesTaxes]="totalSalesTaxes()"
+    >
+    </shopping-basket-ui>
+  }
+  @case (CallState.error) {
+    <br><button data-test="getShoppingBasketError"  mat-flat-button  color="warn">Error, could not get shopping basket.</button>
+  }
+}
+
+

@@ -17,4 +17,4 @@ Run the build on port 4200: `angular-http-server -p 4200` this way it can commun
 `openapi-generator-cli`
 
 ## Run e2e tests for sale-taxes-user-fe app:
-`nx run sale-taxes-user-fe-e2e:e2e-open `
+`nx run sale-taxes-user-fe-e2e:e2e-open`

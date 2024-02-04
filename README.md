@@ -4,6 +4,7 @@
 ## Start the app
 
 It needs some new version of node.js and npm installed on the machine.
+If those are installed run `npm install` command from the root
 To start the development server run from workspace root: `nx serve sale-taxes-user-fe`. Open your browser and navigate to http://localhost:4200/.
 
 ## Run the built app

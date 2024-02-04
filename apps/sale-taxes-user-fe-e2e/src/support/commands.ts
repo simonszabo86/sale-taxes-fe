@@ -14,7 +14,6 @@
 declare namespace Cypress {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Chainable<Subject> {
-    login(email: string, password: string): void;
 
     getBySel(
       selector: string,
@@ -24,11 +23,6 @@ declare namespace Cypress {
     findBySel(selector: string): Chainable<JQuery<HTMLElement>>;
   }
 }
-
-// -- This is a parent command --
-Cypress.Commands.add('login', (email, password) => {
-  console.log('Custom command example: Login', email, password);
-});
 
 Cypress.Commands.add('getBySel', (selector, options?) => {
   return cy.get(`[data-test=${selector}]`, options);

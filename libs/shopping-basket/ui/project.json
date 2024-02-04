@@ -31,6 +31,22 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint"
+    },
+    "component-test": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "libs/shopping-basket/ui/cypress.config.ts",
+        "testingType": "component",
+        "skipServe": true,
+        "devServerTarget": "sale-taxes-user-fe:build"
+      }
+    },
+    "component-test-open":  {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cypress open",
+        "cwd": "libs/shopping-basket/ui/"
+      }
     }
   }
 }

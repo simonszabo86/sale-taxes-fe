@@ -1,11 +1,9 @@
 import { InputSignal } from '@angular/core';
 import { ProductDTO } from '@sale-taxes-fe/api';
-import { Observable } from 'rxjs';
 import * as i0 from "@angular/core";
 export declare class ShoppingBasketUiComponent {
     displayedColumns: string[];
     products: InputSignal<ProductDTO[]>;
-    products$: Observable<ProductDTO[]>;
     totalSalesTaxes: InputSignal<number>;
     totalShelfPrice: InputSignal<number>;
     protected readonly ProductDTO: typeof ProductDTO;

@@ -2,8 +2,6 @@ import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular
 import { CommonModule } from '@angular/common';
 import { ProductDTO } from '@sale-taxes-fe/api';
 import { MatTableModule } from '@angular/material/table';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { Observable } from 'rxjs';
 import { MatList, MatListItem } from '@angular/material/list';
 
 @Component({
@@ -19,7 +17,6 @@ export class ShoppingBasketUiComponent {
   displayedColumns: string[] = ['title', 'shelfPrice'];
 
   products: InputSignal<ProductDTO[]> = input<ProductDTO[]>([]);
-  products$: Observable<ProductDTO[]> = toObservable(this.products);
 
   totalSalesTaxes: InputSignal<number> = input<number>(0);
 

@@ -1,7 +1,6 @@
 import { ShoppingBasketUiComponent } from './shopping-basket-ui.component';
 import { input } from '@angular/core';
 import { ProductDTO } from '@sale-taxes-fe/api';
-import * as cypress from 'cypress';
 
 describe(ShoppingBasketUiComponent.name, () => {
 

@@ -2,7 +2,7 @@ import { patchState, signalStore, withComputed, withMethods, withState } from '@
 import { GetShoppingBasketResponse, ProductDTO, ShoppingBasketControllerService } from '@sale-taxes-fe/api';
 import { computed, inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { delay, pipe, switchMap, tap } from 'rxjs';
+import { delay, map, pipe, switchMap, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 
 export enum CallState {
@@ -21,7 +21,15 @@ export const ShoppingBasketStore = signalStore(
   withMethods((state) => {
     const shoppingBasketControllerService = inject(ShoppingBasketControllerService);
 
-    return {
+    const result = {
+      // This action is just added to show a possible way of action chaining
+      logOutMessage: rxMethod<string>(
+        // effect
+        pipe(
+          map((message: string) => console.log('Message arrived: ', message))
+        )
+      ),
+
       // action
       getShoppingBasket: rxMethod<number>(
         // effect
@@ -31,11 +39,12 @@ export const ShoppingBasketStore = signalStore(
               callState: CallState.loading
             });
           }),
-          switchMap((id) => shoppingBasketControllerService.getShoppingBasket(id).pipe(
+          switchMap((id: number) => shoppingBasketControllerService.getShoppingBasket(id).pipe(
             // Added to show the loading indicator
             delay(1000),
             tapResponse({
               next: (response: GetShoppingBasketResponse) => {
+                result.logOutMessage("Got the Shopping basket with id: " + id);
                 // success reducer
                 patchState(state, {
                   products: response.products,
@@ -44,7 +53,7 @@ export const ShoppingBasketStore = signalStore(
               },
               error: (error: unknown) => {
                 // error reducer
-                console.error('Could not get shoppingBasket' + ': ' + error);
+                result.logOutMessage("Could not get the Shopping basket with id: " + id + ", error: " + error);
                 patchState(state, {
                   callState: CallState.error
                 });
@@ -53,9 +62,9 @@ export const ShoppingBasketStore = signalStore(
           ))
         )
       )
-
     };
 
+    return result;
   }),
 
   // custom entries and selectors

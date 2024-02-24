@@ -30,4 +30,4 @@ Run it without browser:  `nx run shopping-basket-ui:component-test`
 docker build -t sale-taxes-fe:0.01 .
 
 ## Create and start container
-docker run -d -p 4200:80 sale-taxes-fe:0.01
+docker run -d -p 4200:80 --name sale-taxes-fe_0.01  sale-taxes-fe:0.01

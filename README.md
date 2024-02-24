@@ -25,3 +25,9 @@ It is much better to test signals which I use here.
 Component tests added to shopping-basket-ui lib
 Command to run it in browser: `nx run shopping-basket-ui:component-test-open`
 Run it without browser:  `nx run shopping-basket-ui:component-test`
+
+## Create image
+docker build -t sale-taxes-fe:0.01 .
+
+## Create and start container
+docker run -d -p 4200:80 sale-taxes-fe:0.01
